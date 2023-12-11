@@ -1,0 +1,170 @@
+
+// Program: Golden Club MT4
+// Developer: Forex Robot Easy Team
+// Developer's Site: forexroboteasy.com
+
+// Import necessary libraries
+#include <Trade\Trade.mqh>
+#include <Trade\PositionInfo.mqh>
+
+// Define constants
+#define STRATEGY_COUNT 12
+#define INITIAL_PRICE 100
+#define PRICE_INCREASE_RATE 50
+
+// Define global variables
+int strategyIndex = 0;
+double currentPrice = INITIAL_PRICE;
+
+// Define trading robot class
+class CGoldenClubMT4
+{
+private:
+    CTrade trade;
+    CPositionInfo positionInfo;
+    
+public:
+    // Constructor
+    CGoldenClubMT4()
+    {
+        // Initialize trading robot
+        OnInit();
+    }
+    
+    // Destructor
+    ~CGoldenClubMT4()
+    {
+        // Cleanup trading robot
+        OnDeinit();
+    }
+    
+    // Initialization function
+    void OnInit()
+    {
+        // Set stop loss protection for all trades
+        trade.SetStopLoss(100);
+        
+        // Subscribe to market data
+        trade.RefreshRates();
+        
+        // Start trading
+        OnTick();
+    }
+    
+    // Cleanup function
+    void OnDeinit()
+    {
+        // Stop trading
+        trade.TradeOperation(TRADE_OPERATION_CLOSE_ALL);
+    }
+    
+    // Main trading function
+    void OnTick()
+    {
+        // Check market conditions
+        if (IsMarketConditionFavorable())
+        {
+            // Execute trade based on smart entry calculation
+            ExecuteTrade();
+        }
+        
+        // Adjust trading strategy based on market conditions
+        AdjustTradingStrategy();
+        
+        // Monitor trade performance
+        MonitorTradePerformance();
+    }
+    
+    // Check if market conditions are favorable
+    bool IsMarketConditionFavorable()
+    {
+        // Add logic here to check market conditions
+        // Return true if conditions are favorable, false otherwise
+    }
+    
+    // Execute trade based on smart entry calculation
+    void ExecuteTrade()
+    {
+        // Add logic here to execute trade
+    }
+    
+    // Adjust trading strategy based on market conditions
+    void AdjustTradingStrategy()
+    {
+        // Add logic here to adjust trading strategy
+    }
+    
+    // Monitor trade performance
+    void MonitorTradePerformance()
+    {
+        // Add logic here to monitor trade performance
+    }
+};
+
+// Entry point of the program
+int OnInit()
+{
+    // Create an instance of the trading robot
+    CGoldenClubMT4 goldenClubMT4;
+    
+    // Return initialization result
+    return(INIT_SUCCEEDED);
+}
+
+// Tick event handler
+void OnTick()
+{
+    // Execute trading logic
+    goldenClubMT4.OnTick();
+}
+
+// Deinitialization event handler
+void OnDeinit(const int reason)
+{
+    // Clean up resources
+    goldenClubMT4.OnDeinit();
+}
+
+// Other event handlers and utility functions can be added here
+
+// Increase the price of the robot every week
+void IncreasePrice()
+{
+    currentPrice += PRICE_INCREASE_RATE;
+}
+
+// Main program loop
+void StartProgram()
+{
+    while (true)
+    {
+        // Check if a week has passed
+        if (IsWeekPassed())
+        {
+            // Increase the price of the robot
+            IncreasePrice();
+        }
+        
+        // Execute other program logic
+        
+        // Sleep for a week
+        Sleep(7 * 24 * 60 * 60 * 1000);
+    }
+}
+
+// Check if a week has passed
+bool IsWeekPassed()
+{
+    // Add logic here to check if a week has passed
+    // Return true if a week has passed, false otherwise
+}
+
+// Program entry point
+int start()
+{
+    // Start the main program loop
+    StartProgram();
+    
+    // Return 0 to indicate successful execution
+    return 0;
+}
